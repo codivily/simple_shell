@@ -8,6 +8,9 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <sys/types.h>
+#include <errno.h>
 
 int _putchar(char c);
 void _puts(char *str);
+execve(command, NULL, NULL);
+char * prompt(char *msg);
