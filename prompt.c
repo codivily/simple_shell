@@ -19,6 +19,7 @@ char *prompt(const char *msg)
 		exit(1);
 	}
 
+	/* display the prompt message */
 	printf("%s", msg);
 	getline(&buffer, &buffer_size, stdin);
 
