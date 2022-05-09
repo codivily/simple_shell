@@ -14,6 +14,9 @@ int main(int argc, char **argv)
 	char *cmd_args[2] = {NULL, NULL};
 	int ok = 0;
 
+	/* unused argv */
+	(void)argv;
+
 	/* an infinite loop */
 	while (1)
 	{
