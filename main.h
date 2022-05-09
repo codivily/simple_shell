@@ -12,5 +12,4 @@
 
 int _putchar(char c);
 void _puts(char *str);
-execve(command, NULL, NULL);
-char * prompt(char *msg);
+char *prompt(const char *msg);
