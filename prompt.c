@@ -11,6 +11,7 @@ char *prompt(const char *msg)
 {
 	char *buffer;
 	size_t buffer_size = 32;
+	size_t n_chars = 0;
 
 	buffer = malloc(sizeof(*buffer) * buffer_size);
 	if (buffer == NULL)
@@ -21,7 +22,10 @@ char *prompt(const char *msg)
 
 	/* display the prompt message */
 	printf("%s", msg);
-	getline(&buffer, &buffer_size, stdin);
+	/* wait for user input */
+	n_chars = getline(&buffer, &buffer_size, stdin);
+	/* remove the '\n' char with a null character */
+	buffer[n_chars - 1] = '\0';
 
 	return (buffer);
 }

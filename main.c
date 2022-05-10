@@ -1,4 +1,5 @@
 #include "main.h"
+#include <string.h>
 
 /**
  * main - Entry point
@@ -7,31 +8,23 @@
  *
  * Return: An integer
  */
-int main(int argc, char **argv)
+int main(int argc, const char **argv)
 {
 	char *cmd = NULL;
-	char *msg = "#cisfun$ ";
-	char *cmd_args[2] = {NULL, NULL};
-	int ok = 0;
-
-	/* unused argv */
-	(void)argv;
+	char *args[2] = {NULL, NULL};
 
 	/* an infinite loop */
 	while (1)
 	{
 		/* read the command from the user */
-		cmd = prompt(msg);
+		cmd = prompt("#cisfun$ ");
 
 		/* command args */
-		cmd_args[0] = cmd;
+		args[0] = cmd;
 
-		/* execute command */	
-		ok = execve(cmd, cmd_args, NULL);
-		
-		/* print an error is command not found */
-		if (ok == -1)
-			perror("Command not found");
+		/* execute and check for error */
+		if (execve(cmd, args, NULL) < 0)
+			dprintf(STDERR_FILENO, "%s: No such file or directory\n", argv[0]);
 
 		/* release malloced memory from prompt function call */
 		free(cmd);
