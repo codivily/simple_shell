@@ -13,5 +13,6 @@
 int _putchar(char c);
 void _puts(char *str);
 char *prompt(const char *msg);
+char **to_args(char *str);
 
 #endif
