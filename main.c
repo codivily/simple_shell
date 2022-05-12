@@ -12,6 +12,7 @@ int main(int argc, const char **argv)
 {
 	char *cmd = NULL;
 	char *args[2] = {NULL, NULL};
+	int ok = 0;
 
 	/* an infinite loop */
 	while (1)
@@ -23,7 +24,8 @@ int main(int argc, const char **argv)
 		args[0] = cmd;
 
 		/* execute and check for error */
-		if (execve(cmd, args, NULL) < 0)
+		ok = execve(cmd, args, NULL);
+		if (ok == -1)
 			dprintf(STDERR_FILENO, "%s: No such file or directory\n", argv[0]);
 
 		/* release malloced memory from prompt function call */
