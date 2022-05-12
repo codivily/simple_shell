@@ -1,4 +1,5 @@
 #include "main.h"
+#include <stdio.h>
 
 
 /**
@@ -17,27 +18,30 @@ char **to_args(char *str)
 		return (NULL);
 
 	/* copy str into str_ */
-	while(str[i++])
+	while (str[i++])
 		;
 	len = i;
 
 	str_ = malloc(sizeof(*str_) * (len + 1));
 	if (!str_)
-		return (NULL);
-		
-	while (i >= 0)
 	{
-		str_[i] = str[i];
-		i--;
+		perror("malloc failed\n");
+		exit(1);
 	}
 
-	for(token = strtok(str_, delim); token; token = strtok(NULL, delim))
+	for (i = 0; i <= len; i++)
+		str_[i] = str[i];
+
+	for (token = strtok(str_, delim); token; token = strtok(NULL, delim))
 		argc += 1;
 	free(str_);
 
 	args = malloc(sizeof(*args) * (argc + 1));
 	if (!args)
-		return (NULL);
+	{
+		perror("malloc failed");
+		exit(1);
+	}
 
 	i = 0;
 	for (token = strtok(str, delim); token; token = strtok(NULL, delim))

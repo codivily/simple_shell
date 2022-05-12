@@ -10,26 +10,26 @@
  */
 int main(int argc, const char **argv)
 {
-	char *cmd = NULL;
-	char *args[2] = {NULL, NULL};
-	int ok = 0;
+	char *cmd_str = NULL;
+	char **args = NULL;
 
 	/* an infinite loop */
 	while (1)
 	{
 		/* read the command from the user */
-		cmd = prompt("#cisfun$ ");
+		cmd_str = prompt("#cisfun$ ");
 
 		/* command args */
-		args[0] = cmd;
+		args = to_args(cmd_str);
 
 		/* execute and check for error */
-		ok = execve(cmd, args, NULL);
-		if (ok == -1)
-			dprintf(STDERR_FILENO, "%s: No such file or directory\n", argv[0]);
+		execve(args[0], args, NULL);
+
+		dprintf(STDERR_FILENO, "%s: No such file or directory\n", argv[0]);
 
 		/* release malloced memory from prompt function call */
-		free(cmd);
+		free(cmd_str);
+
 	}
 
 
