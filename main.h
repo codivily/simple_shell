@@ -9,6 +9,7 @@
 #include <fcntl.h>
 #include <sys/types.h>
 #include <errno.h>
+#include <signal.h>
 
 int _putchar(char c);
 int file_exists(const char *filename);
