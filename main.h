@@ -11,8 +11,13 @@
 #include <errno.h>
 
 int _putchar(char c);
+int file_exists(const char *filename);
 void _puts(char *str);
 char *prompt(const char *msg);
 char **to_args(char *str);
+char *_strdup(const char *str);
+char *_getenv(const char *name);
+char *locate(const char *name);
+char *join_paths(char separator, const char *p1, const char *p2);
 
 #endif
