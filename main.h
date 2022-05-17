@@ -13,12 +13,18 @@
 
 int _putchar(char c);
 int file_exists(const char *filename);
+int _is_numeric(const char *str);
+int _atoi(char *s);
+int _strcmp(const char *s1, const char *s2);
 void _puts(char *str);
+void _printenv(void);
+void _exit_(char **args);
 char *prompt(const char *msg);
 char **to_args(char *str);
 char *_strdup(const char *str);
 char *_getenv(const char *name);
 char *locate(const char *name);
 char *join_paths(char separator, const char *p1, const char *p2);
+extern char **environ;
 
 #endif
