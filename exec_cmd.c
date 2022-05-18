@@ -30,7 +30,7 @@ int exec_cmd(char **args)
 			dprintf(STDERR_FILENO, "%s: No such file or directory.\n", cmd);
 		else if (fork() == 0)
 		{
-			err_code = execve(*args, args, NULL);
+			err_code = execve(*args, args, environ);
 			dprintf(STDERR_FILENO, "%s: No such file or directory\n", cmd);
 			free(cmd);
 			exit(err_code);

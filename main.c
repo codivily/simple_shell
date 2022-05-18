@@ -1,5 +1,6 @@
 #include "main.h"
 #include <stdlib.h>
+#include <unistd.h>
 
 /**
  *main - Entry point
@@ -10,27 +11,36 @@
  */
 int main(int argc, char **argv)
 {
-	char *cmd_str = NULL;
+	char *cmd = NULL;
 	char **args = NULL;
 	int status = 0;
+	int piped = !isatty(STDIN_FILENO);
 
-	/*an infinite loop */
 	while (1)
 	{
-		/*command line args support */
-		if (argc > 1)
+		if (piped)
+		{
+			cmd = _getline(STDIN_FILENO);
+			if (!cmd)
+				break;
+		}
+		else if (argc > 1)
 			args = argv + 1;
 		else
 		{
-			/*prompt the user  to enter command */
-			cmd_str = prompt("#cisfun$ ");
-			/*command args */
-			args = to_args(cmd_str);
+			write(STDOUT_FILENO, "#cisfun$ ", 10);
+			cmd = _getline(STDIN_FILENO);
+			if (!cmd)
+			{
+				dprintf(STDERR_FILENO, "%s: Not such file or directory", *argv);
+				continue;
+			}
 		}
 
+		args = to_args(cmd);
 		status = exec_cmd(args);
-		free(cmd_str);
-		cmd_str = NULL;
+		free(cmd);
+		cmd = NULL;
 		if (argc > 1)
 			exit(status);
 	}
