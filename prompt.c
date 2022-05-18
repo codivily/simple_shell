@@ -10,7 +10,7 @@
 char *prompt(const char *msg)
 {
 	char *buffer = NULL;
-	size_t buffer_size = 0; 
+	size_t buffer_size = 0;
 	ssize_t n_chars = 0;
 
 	/* display the prompt message */

@@ -1,8 +1,6 @@
 #include "main.h"
 #include <stddef.h>
 
-extern char **environ;
-
 /**
  *_getenv - get an environment variable
  *@name: The var name
