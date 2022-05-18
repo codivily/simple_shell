@@ -7,10 +7,11 @@
 /**
  *exec_cmd - execute command from args
  *@args: command arguments
+ *@shell_path: A string
  *
  *Return: status (An integer)
  */
-int exec_cmd(char **args)
+int exec_cmd(char **args, char *shell_path)
 {
 	int status = 0;
 	char *cmd = NULL;
@@ -27,11 +28,11 @@ int exec_cmd(char **args)
 		cmd = *args;
 		*args = locate(*args);
 		if (*args == NULL)
-			dprintf(STDERR_FILENO, "%s: No such file or directory.\n", cmd);
+			dprintf(STDERR_FILENO, "%s: No such file or directory\n", shell_path);
 		else if (fork() == 0)
 		{
 			err_code = execve(*args, args, environ);
-			dprintf(STDERR_FILENO, "%s: No such file or directory\n", cmd);
+			dprintf(STDERR_FILENO, "%s: No such file or directory\n", shell_path);
 			free(cmd);
 			exit(err_code);
 		}

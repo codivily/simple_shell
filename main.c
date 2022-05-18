@@ -32,13 +32,12 @@ int main(int argc, char **argv)
 			cmd = _getline(STDIN_FILENO);
 			if (!cmd)
 			{
-				dprintf(STDERR_FILENO, "%s: Not such file or directory", *argv);
+				dprintf(STDERR_FILENO, "%s: No such file or directory", *argv);
 				continue;
 			}
 		}
-
 		args = to_args(cmd);
-		status = exec_cmd(args);
+		status = exec_cmd(args, *argv);
 		free(cmd);
 		cmd = NULL;
 		if (argc > 1)
