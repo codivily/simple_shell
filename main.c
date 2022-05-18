@@ -1,5 +1,5 @@
+#include "main.h"
 #include <stdlib.h>
-#include <sys/wait.h>
 
 /**
  *main - Entry point
@@ -12,7 +12,6 @@ int main(int argc, char **argv)
 {
 	char *cmd_str = NULL;
 	char **args = NULL;
-	int exit_code = 0;
 	int status = 0;
 
 	/*an infinite loop */

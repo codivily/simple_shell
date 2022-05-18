@@ -25,6 +25,7 @@ char *_strdup(const char *str);
 char *_getenv(const char *name);
 char *locate(const char *name);
 char *join_paths(char separator, const char *p1, const char *p2);
+int exec_cmd(char **args);
 extern char **environ;
 
 #endif
