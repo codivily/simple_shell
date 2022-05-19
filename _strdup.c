@@ -1,3 +1,4 @@
+#include "main.h"
 #include <stdlib.h>
 
 /**
@@ -18,12 +19,7 @@ char *_strdup(const char *str)
 
 	_str = malloc(sizeof(*_str) * (len + 1));
 
-	i = 0;
-	while (i <= len)
-	{
-		_str[i] = str[i];
-		i++;
-	}
+	_memcpy(_str, str, len + 1);
 
 	return (_str);
 }

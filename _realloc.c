@@ -14,9 +14,15 @@ void *_realloc(void *ptr, size_t n)
 
 	new_ptr = malloc(n);
 	if (!new_ptr)
+	{
+		free(ptr);
+		ptr = NULL;
 		return (NULL);
+	}
+
 	_memcpy(new_ptr, ptr, n);
 	free(ptr);
+	ptr = NULL;
 	return (new_ptr);
 }
 

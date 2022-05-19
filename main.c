@@ -33,13 +33,15 @@ int main(int argc, char **argv)
 			if (!cmd)
 			{
 				dprintf(STDERR_FILENO, "%s: No such file or directory", *argv);
+				free(cmd);
+				cmd = NULL;
 				continue;
 			}
 		}
 		args = to_args(cmd);
-		status = exec_cmd(args, *argv);
 		free(cmd);
 		cmd = NULL;
+		status = exec_cmd(args, *argv);
 		if (argc > 1)
 			exit(status);
 	}

@@ -8,7 +8,7 @@
  *
  *Return: void
  */
-void _memcpy(void *dest, void *src, size_t n)
+void _memcpy(const void *dest, const void *src, const size_t n)
 {
 	size_t i = 0;
 	char *csrc = (char *) src;

@@ -16,6 +16,7 @@ char *_getline(int fd)
 	size_t max_len = 0, len = 0, i = 0;
 	char *line = NULL;
 
+	max_len = sizeof(chk);
 	line = malloc(sizeof(*line) * (max_len + 1));
 	while (1)
 	{

@@ -12,29 +12,17 @@ char **to_args(char *str)
 {
 	char **args = NULL;
 	char *token = NULL, *delim = " ", *str_ = NULL;
-	size_t len = 0, i = 0, argc = 0;
+	size_t i = 0, argc = 0;
 
 	if (!str)
 		return (NULL);
 
-	/* copy str into str_ */
-	while (str[i++])
-		;
-	len = i;
-
-	str_ = malloc(sizeof(*str_) * (len + 1));
-	if (!str_)
-	{
-		perror("malloc failed\n");
-		exit(1);
-	}
-
-	for (i = 0; i <= len; i++)
-		str_[i] = str[i];
+	str_ = _strdup(str);
 
 	for (token = strtok(str_, delim); token; token = strtok(NULL, delim))
 		argc += 1;
 	free(str_);
+	str_ = _strdup(str);
 
 	args = malloc(sizeof(*args) * (argc + 1));
 	if (!args)
@@ -42,9 +30,9 @@ char **to_args(char *str)
 		perror("malloc failed");
 		exit(1);
 	}
-
+	args[argc] = NULL;
 	i = 0;
-	for (token = strtok(str, delim); token; token = strtok(NULL, delim))
+	for (token = strtok(str_, delim); token; token = strtok(NULL, delim))
 		args[i++] = token;
 
 	return (args);
