@@ -37,7 +37,7 @@ char *_getline(int fd)
 		if (n_read > max_len - len)
 		{
 			max_len += sizeof(chk);
-			line = realloc(line, (max_len + 1));
+			line = _realloc(line, (max_len + 1));
 		}
 	}
 
