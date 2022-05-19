@@ -23,3 +23,4 @@ int _is_numeric(const char *str)
 
 	return (c == '\0' ? 1 : 0);
 }
+

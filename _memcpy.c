@@ -20,3 +20,4 @@ void _memcpy(void *dest, void *src, size_t n)
 		i++;
 	}
 }
+

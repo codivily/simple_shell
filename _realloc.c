@@ -19,3 +19,4 @@ void *_realloc(void *ptr, size_t n)
 	free(ptr);
 	return (new_ptr);
 }
+

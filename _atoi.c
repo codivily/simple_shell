@@ -23,3 +23,4 @@ int _atoi(char *s)
 
 	return (ret * sign);
 }
+

@@ -47,3 +47,4 @@ char *join_paths(const char sep, const char *path1, const char *path2)
 	joined[i] = '\0';
 	return (joined);
 }
+
