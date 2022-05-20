@@ -25,8 +25,9 @@ char *_getenv(const char *name);
 char *locate(const char *name);
 char *join_paths(char separator, const char *p1, const char *p2);
 int exec_cmd(char **args, char *shell_path);
-char *_getline(int fd);
+ssize_t _getline(char **line, size_t *max_len, int fd);
 void _memcpy(const void *dest, const void *src, const size_t n);
+size_t _strlen(char *);
 void *_realloc(void *ptr, size_t n);
 extern char **environ;
 

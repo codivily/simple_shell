@@ -24,6 +24,8 @@ void _exit_(char **args)
 	else if (_is_numeric(args[1]))
 		status = _atoi(args[1]);
 
+	free(args);
+
 	exit(status);
 
 }

@@ -22,7 +22,7 @@ char **to_args(char *str)
 	for (token = strtok(str_, delim); token; token = strtok(NULL, delim))
 		argc += 1;
 	free(str_);
-	str_ = _strdup(str);
+	str_ = NULL;
 
 	args = malloc(sizeof(*args) * (argc + 1));
 	if (!args)
@@ -32,7 +32,7 @@ char **to_args(char *str)
 	}
 	args[argc] = NULL;
 	i = 0;
-	for (token = strtok(str_, delim); token; token = strtok(NULL, delim))
+	for (token = strtok(str, delim); token; token = strtok(NULL, delim))
 		args[i++] = token;
 
 	return (args);

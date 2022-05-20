@@ -15,7 +15,8 @@ int exec_cmd(char **args, char *shell_path)
 {
 	int status = 0;
 	int err_code = 0;
-	char *cmd = *args;
+	char cmd_path[257];
+	char *cmd = NULL;
 
 	/*builtin */
 	if (_strcmp(*args, "exit") == 0)
@@ -25,22 +26,28 @@ int exec_cmd(char **args, char *shell_path)
 		_printenv();
 	else
 	{
-		args[0] = locate(*args);
-		if (*args == NULL)
+		cmd = locate(*args);
+		if (cmd == NULL)
+		{
 			dprintf(STDERR_FILENO, "%s: No such file or directory\n", shell_path);
-		else if (fork() == 0)
+			return (status);
+		}
+		_memcpy(cmd_path, cmd, _strlen(cmd) + 1);
+		free(cmd);
+		*args = cmd_path;
+		if (fork() == 0)
 		{
 			err_code = execve(*args, args, environ);
 			dprintf(STDERR_FILENO, "%s: No such file or directory\n", shell_path);
 			free(cmd);
+			free(args);
 			exit(err_code);
 		}
 		else
 			wait(&status);
 	}
 
-	free(cmd);
-
+	free(args);
 	return (status);
 }
 
