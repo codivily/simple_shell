@@ -43,13 +43,13 @@ int main(int argc, char **argv)
 			args = argv + 1;
 		else
 		{
-			write(STDOUT_FILENO, "#cisfun$ ", 11);
+			write(STDOUT_FILENO, "#cisfun$ ", 10);
 			_getline(&cmd, &cmd_size, STDIN_FILENO);
 			if (!cmd)
 			{
 				free(cmd);
 				cmd = NULL;
-				dprintf(STDERR_FILENO, "%s: No such file or directory\n", *argv);
+				print_error(*argv, ": No such file or directory\n");
 				continue;
 			}
 		}
