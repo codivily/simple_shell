@@ -26,6 +26,7 @@ int main(int argc, char **argv)
 	char *cmd = NULL;
 	size_t cmd_size = 0;
 	char _cmd[128];
+	ssize_t cmd_len = 0;
 	char **args = NULL;
 	int status = 0;
 	int piped = !isatty(STDIN_FILENO);
@@ -33,35 +34,29 @@ int main(int argc, char **argv)
 	signal(SIGINT, on_signal);
 	while (1)
 	{
-		if (piped)
+		if (argc > 1)
 		{
-			_getline(&cmd, &cmd_size, STDIN_FILENO);
-			if (!cmd)
-				break;
+			status = exec_cmd(argv + 1, *argv);
+			exit(status);
 		}
-		else if (argc > 1)
-			args = argv + 1;
-		else
-		{
+
+		if (!piped)
 			write(STDOUT_FILENO, "#cisfun$ ", 10);
-			_getline(&cmd, &cmd_size, STDIN_FILENO);
-			if (!cmd)
-			{
-				free(cmd);
-				cmd = NULL;
-				print_error(*argv, ": No such file or directory\n");
-				continue;
-			}
+		cmd_len = _getline(&cmd, &cmd_size, STDIN_FILENO);
+		if (cmd[0] == '\n' || cmd[0] == '\0')
+		{
+			free(cmd);
+			cmd = NULL;
+			print_error(*argv, ": No such file or directory\n");
+			continue;
 		}
+		cmd[cmd_len - 1] = '\0';
 		_memcpy(_cmd, cmd, _strlen(cmd) + 1);
 		free(cmd);
 		cmd = NULL;
 		args = to_args(_cmd);
 		status = exec_cmd(args, *argv);
-		if (argc > 1)
-			exit(status);
 	}
-
 	return (0);
 }
 

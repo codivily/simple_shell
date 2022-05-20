@@ -13,44 +13,34 @@
  */
 ssize_t _getline(char **line, size_t *line_len, int fd)
 {
-	static char chk[32], *p_chk;
-	static ssize_t n_read;
-	ssize_t len = 0, i = 0, max_len = *line_len;
+	static char chk[32];
+	static ssize_t n;
+	static size_t i;
+	ssize_t len = 0, max_len = *line_len;
 
 	if (*line == NULL)
 	{
 		max_len = sizeof(chk);
-		*line = malloc(sizeof(**line) * (max_len + 1));
+		*line = malloc(sizeof(**line) * max_len);
 	}
 	while (1)
 	{
-		for (i = 0; i < n_read && p_chk[i] != '\n'; i++)
-		;
-		_memcpy(*line + len, p_chk, i);
-		len += i;
-		if (i++ < n_read)
+		if (n > 0)
 		{
-			n_read -= i;
-			p_chk += i;
-			break;
+			while (n-- > 0)
+				(*line)[len++] = chk[i++];
+			if (chk[i - 1] == '\n' || i < sizeof(chk))
+				break;
 		}
-		p_chk = chk;
-		n_read = read(fd, chk, sizeof(chk));
-		if (n_read <= 0)
-			break;
-		if (n_read > max_len - len)
+		i = 0;
+		n = read(fd, chk, sizeof(chk));
+		if (n > max_len - len)
 		{
 			max_len += sizeof(chk);
 			*line = _realloc(*line, (max_len + 1));
 		}
 	}
 	(*line)[len] = '\0';
-	if (len == 0)
-	{
-		free(*line);
-		*line = NULL;
-		max_len = 0;
-	}
 	*line_len = max_len;
 	return (len);
 }
