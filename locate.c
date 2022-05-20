@@ -16,8 +16,6 @@ char *locate(const char *name)
 	char *dir_path = NULL;
 	char *file_path = NULL;
 
-	/*PATH=/path/to/dir1\0/path/to/dir/2:/path/to/dir3*/
-
 	if (file_exists(name))
 		return (_strdup(name));
 

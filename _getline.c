@@ -6,21 +6,21 @@
 /**
  *_getline - get the next line from a file
  *@line: A pointer
- *@max_len: A ponter to size
+ *@line_len: A ponter to size
  *@fd: file descriptor
  *
  *Return: A string
  */
-ssize_t _getline(char **line, size_t *max_len, int fd)
+ssize_t _getline(char **line, size_t *line_len, int fd)
 {
 	static char chk[32], *p_chk;
 	static ssize_t n_read;
-	ssize_t len = 0, i = 0;
+	ssize_t len = 0, i = 0, max_len = *line_len;
 
 	if (*line == NULL)
 	{
-		*max_len = sizeof(chk);
-		*line = malloc(sizeof(**line) * (*max_len + 1));
+		max_len = sizeof(chk);
+		*line = malloc(sizeof(**line) * (max_len + 1));
 	}
 	while (1)
 	{
@@ -38,10 +38,10 @@ ssize_t _getline(char **line, size_t *max_len, int fd)
 		n_read = read(fd, chk, sizeof(chk));
 		if (n_read <= 0)
 			break;
-		if (n_read > *max_len - len)
+		if (n_read > max_len - len)
 		{
-			(*max_len) += sizeof(chk);
-			*line = _realloc(*line, ((*max_len) + 1));
+			max_len += sizeof(chk);
+			*line = _realloc(*line, (max_len + 1));
 		}
 	}
 	(*line)[len] = '\0';
@@ -49,7 +49,9 @@ ssize_t _getline(char **line, size_t *max_len, int fd)
 	{
 		free(*line);
 		*line = NULL;
+		max_len = 0;
 	}
+	*line_len = max_len;
 	return (len);
 }
 
